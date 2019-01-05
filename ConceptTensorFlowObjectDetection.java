@@ -30,12 +30,13 @@
 package org.firstinspires.ftc.teamcode.Real_Opmodes;
 
 import com.qualcomm.hardware.bosch.BNO055IMUImpl;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -57,8 +58,8 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "Concept: TensorFlow Object Detection", group = "Concept")
-@Disabled
+@Autonomous(name = "Pranav's Autonomous Program", group = "Concept")
+
 public class ConceptTensorFlowObjectDetection extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     public DcMotor frontLeft;
@@ -143,10 +144,29 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();
+
         waitForStart();
+
+        //latch.setDirection(DcMotorSimple.Direction.REVERSE);
+        //latch.setPower(1);
+        //sleep(2000);
+
+        //Strafes to the right(To strafe to whatever direction, the side that's facing the direction it's wheels should be moving inward to each other, while the opposite side wheels should be moving outward.)
+        //frontRight.setPower(-1);
+        //backLeft.setPower(-1);
+        //frontLeft.setPower(1);
+        //backRight.setPower(1);
+
+
 
         inchDrive(5, 5, 5, 5, 5, 5); //moves forward
         sleep(1000);
+
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        frontRight.setPower(0);
+        backRight.setPower(0);
+
 
         telemetry.addData("Path0", "Starting at %7d :%7d",
                 frontLeft.getCurrentPosition(),
@@ -180,11 +200,17 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
                             }
                             if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
                                 if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                                    telemetry.addData("Gold Mineral Position", "Left");
+                                    inchDrive(2, -2, 2, 2, -2,2); ;//telemetry.addData("Gold Mineral Position", "Left");
+                                    inchDrive(2, 2, 2, 2, 2, 2);
+                                    inchDrive(2, 1,-1, -1, 1, 2);
+                                    inchDrive(2, 2, 2, 2, 2, 2);
                                 } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                                    telemetry.addData("Gold Mineral Position", "Right");
+                                    inchDrive(2, 2, -2, -2, 2, 2);//telemetry.addData("Gold Mineral Position", "Right");
+                                    inchDrive(2, 2, 2, 2, 2, 2);
+                                    inchDrive(2, -1, 1, 1, -1, 2);
+                                    inchDrive(2, 2, 2, 2, 2, 2);
                                 } else {
-                                    telemetry.addData("Gold Mineral Position", "Center");
+                                    inchDrive(2, 2, 2, 2, 2, 2);//telemetry.addData("Gold Mineral Position", "Center");
                                 }
                             }
                         }
@@ -267,7 +293,17 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
             frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (frontRight.isBusy() && backLeft.isBusy() && frontLeft.isBusy() && backRight.isBusy())) {
+
+
+            }
+
+
 
         }
+
     }
+
 }
