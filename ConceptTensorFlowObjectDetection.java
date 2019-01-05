@@ -56,7 +56,7 @@ import java.util.List;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
  *
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
- * is explained below.
+* is explained below.
  */
 @Autonomous(name = "Pranav's Autonomous Program", group = "Concept")
 
@@ -156,12 +156,20 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
         //backLeft.setPower(-1);
         //frontLeft.setPower(1);
         //backRight.setPower(1);
+        //sleep(1000);
+
+        //Positions robot to be ready to sample
+        //frontRight.setPower(-1);
+        //backLeft.setPower(1);
+        //frontLeft.setPower(1);
+        //backRight.setPower(-1);
 
 
-
+        //Test code
         inchDrive(5, 5, 5, 5, 5, 5); //moves forward
         sleep(1000);
 
+        //Stops all movement
         frontLeft.setPower(0);
         backLeft.setPower(0);
         frontRight.setPower(0);
@@ -200,17 +208,17 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
                             }
                             if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
                                 if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                                    inchDrive(2, -2, 2, 2, -2,2); ;//telemetry.addData("Gold Mineral Position", "Left");
-                                    inchDrive(2, 2, 2, 2, 2, 2);
+                                    inchDrive(2, -2, 2, 2, -2,2);//telemetry.addData("Gold Mineral Position", "Left");
+                                    inchDrive(2, 2, 2, 2, 2, 2);//This part of the code moves the yellow mineral if it's positioned on the left.(Sampling)
                                     inchDrive(2, 1,-1, -1, 1, 2);
                                     inchDrive(2, 2, 2, 2, 2, 2);
                                 } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
                                     inchDrive(2, 2, -2, -2, 2, 2);//telemetry.addData("Gold Mineral Position", "Right");
-                                    inchDrive(2, 2, 2, 2, 2, 2);
+                                    inchDrive(2, 2, 2, 2, 2, 2);//This part of the code moves the yellow mineral if it's positioned on the right.(Sampling)
                                     inchDrive(2, -1, 1, 1, -1, 2);
                                     inchDrive(2, 2, 2, 2, 2, 2);
                                 } else {
-                                    inchDrive(2, 2, 2, 2, 2, 2);//telemetry.addData("Gold Mineral Position", "Center");
+                                    inchDrive(2, 2, 2, 2, 2, 2);//telemetry.addData("Gold Mineral Position", "Center");    -- This part of the code moves the yellow mineral if it's positioned in the center. (Sampling)
                                 }
                             }
                         }
